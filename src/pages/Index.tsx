@@ -9,7 +9,10 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-b from-secondary-100 to-secondary-200">
       <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <a href="/" className="text-xl font-semibold text-primary">ConnectaHero</a>
+          <a href="/" className="text-xl font-semibold text-primary flex items-center gap-2">
+            <span>TRUE Hands</span>
+            <span role="img" aria-label="hands">🤲</span>
+          </a>
           <div className="flex items-center gap-4">
             <Button variant="outline" asChild>
               <Link to="/login">Login</Link>

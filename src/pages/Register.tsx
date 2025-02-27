@@ -6,19 +6,149 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ArrowLeft, Building2, Store, UserRound } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type UserRole = "institute" | "donor" | "supplier" | null;
 
+const storeTypes = [
+  "Grocery Store",
+  "Supermarket",
+  "General Store",
+  "Convenience Store",
+  "Wholesale Market",
+  "Hypermarket",
+  "Departmental Store",
+  "Food Mart"
+];
+
 const Register = () => {
   const [selectedRole, setSelectedRole] = useState<UserRole>(null);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    location: "",
+    registrationYear: "",
+    registrationProof: "",
+    storeType: ""
+  });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Registration logic will be added here
-    console.log("Registration attempt:", { email, password, name, role: selectedRole });
+    console.log("Registration attempt:", { ...formData, role: selectedRole });
+  };
+
+  const renderRoleSpecificFields = () => {
+    switch (selectedRole) {
+      case "institute":
+        return (
+          <>
+            <div className="space-y-2">
+              <Label htmlFor="name">Institute Name</Label>
+              <Input
+                id="name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="registrationProof">Proof of Institute Registration</Label>
+              <Input
+                id="registrationProof"
+                type="file"
+                onChange={(e) => setFormData({ ...formData, registrationProof: e.target.value })}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="registrationYear">Registered in Year</Label>
+              <Input
+                id="registrationYear"
+                type="date"
+                value={formData.registrationYear}
+                onChange={(e) => setFormData({ ...formData, registrationYear: e.target.value })}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="location">Location of Institute</Label>
+              <Input
+                id="location"
+                value={formData.location}
+                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                required
+              />
+            </div>
+          </>
+        );
+      case "donor":
+        return (
+          <>
+            <div className="space-y-2">
+              <Label htmlFor="name">Donor Name</Label>
+              <Input
+                id="name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="location">Location</Label>
+              <Input
+                id="location"
+                value={formData.location}
+                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                required
+              />
+            </div>
+          </>
+        );
+      case "supplier":
+        return (
+          <>
+            <div className="space-y-2">
+              <Label htmlFor="name">Supplier Name</Label>
+              <Input
+                id="name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="location">Store Location</Label>
+              <Input
+                id="location"
+                value={formData.location}
+                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="storeType">Type of Store</Label>
+              <Select
+                value={formData.storeType}
+                onValueChange={(value) => setFormData({ ...formData, storeType: value })}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select store type" />
+                </SelectTrigger>
+                <SelectContent>
+                  {storeTypes.map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {type}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </>
+        );
+      default:
+        return null;
+    }
   };
 
   return (
@@ -71,23 +201,16 @@ const Register = () => {
               </Button>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
-              <Input
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </div>
+            {renderRoleSpecificFields()}
+
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="name@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
               />
             </div>
@@ -96,8 +219,8 @@ const Register = () => {
               <Input
                 id="password"
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                 required
               />
             </div>

@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import Chatbot from "./chatbot"; // Import Chatbot component
 import { ArrowRight, UserRound, Building2, Store } from "lucide-react";
 
 const Index = () => {
@@ -16,6 +17,18 @@ const Index = () => {
           <div className="flex items-center gap-4">
             <Button variant="outline" asChild>
               <Link to="/login">Login</Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link to="/institute/AdminDash">Admin</Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link to="/supplier">Supplier</Link>
+            </Button> 
+            <Button variant="outline" asChild>
+              <Link to="/institute/dashboard">Institutes</Link>
+            </Button>
+            <Button variant="outline" asChild>
+              <Link to="/donor">Donor</Link>
             </Button>
             <Button asChild>
               <Link to="/register">Register</Link>
@@ -106,6 +119,10 @@ const Index = () => {
             Start Your Journey
           </Button>
         </section>
+
+        {/* Integrate Chatbot Here */}
+        <Chatbot />
+
       </main>
 
       <footer className="border-t">
